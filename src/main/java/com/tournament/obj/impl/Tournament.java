@@ -1,23 +1,25 @@
 package com.tournament.obj.impl;
 
 import com.tournament.obj.ITournament;
-import it.unimi.dsi.fastutil.Hash;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
 public class Tournament implements ITournament {
 
-
     private final String arenaId;
     private int maxRound;
     private int currentRound;
-    private HashMap<UUID, TournamentPlayer> activePlayers;
+    private final HashMap<UUID, TournamentPlayer> activePlayers;
+    private final List<UUID> spectators;
+    private boolean isPlaying;
 
     public Tournament(String arenaId){
         this.arenaId = arenaId;
         this.activePlayers = new HashMap<>();
+        this.spectators = new ArrayList<>();
     }
 
     @Override
@@ -37,7 +39,7 @@ public class Tournament implements ITournament {
 
     @Override
     public int nextRound() {
-        return 0;
+        return ++this.currentRound;
     }
 
     @Override
@@ -47,17 +49,17 @@ public class Tournament implements ITournament {
 
     @Override
     public List<UUID> getSpectators() {
-        return null;
+        return spectators;
     }
 
     @Override
     public void addSpectator(UUID uuid) {
-
+        spectators.add(uuid);
     }
 
     @Override
     public void removeSpectator(UUID uuid) {
-
+        spectators.remove(uuid);
     }
 
     @Override
@@ -68,5 +70,21 @@ public class Tournament implements ITournament {
     @Override
     public void removeActivePlayer(UUID uuid) {
         activePlayers.remove(uuid);
+    }
+
+    @Override
+    public boolean hasStarted() {
+        return this.isPlaying;
+    }
+
+    @Override
+    public void start() {
+        this.isPlaying = true;
+    }
+
+    @Override
+    public void end() {
+        this.isPlaying = false;
+
     }
 }

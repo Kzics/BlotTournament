@@ -18,5 +18,8 @@ public interface ITournament {
     void removeSpectator(UUID uuid);
     void addActivePlayer(TournamentPlayer player);
     void removeActivePlayer(UUID uuid);
+    boolean hasStarted();
+    void start();
+    void end();
 
 }
