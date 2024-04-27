@@ -1,28 +1,27 @@
 package com.tournament.manager;
 
-import com.tournament.obj.impl.Tournament;
+import com.tournament.obj.impl.tournaments.SoloTournament;
 
 import java.util.HashMap;
 
 public class TournamentsManager {
-    HashMap<String, Tournament> activeTournaments;
+    HashMap<String, SoloTournament> activeTournaments;
     public TournamentsManager(){
         this.activeTournaments = new HashMap<>();
     }
 
-    private HashMap<String, Tournament> getActiveTournaments() {
+    public HashMap<String, SoloTournament> getActiveTournaments() {
         return activeTournaments;
     }
 
-    public void addTournament(Tournament tournament){
-        activeTournaments.put(tournament.getArenaId(), tournament);
+    public void addTournament(SoloTournament soloTournament){
+        activeTournaments.put(soloTournament.getArenaId(), soloTournament);
     }
-
     public void removeTournament(String arenaId){
         activeTournaments.remove(arenaId);
     }
 
-    public Tournament getTournament(String arenaId){
+    public SoloTournament getTournament(String arenaId){
         return activeTournaments.get(arenaId);
     }
 
@@ -37,21 +36,21 @@ public class TournamentsManager {
     public void startTournament(String arenaId){
         if(!exists(arenaId)) return;
 
-        Tournament tournament = getTournament(arenaId);
+        SoloTournament soloTournament = getTournament(arenaId);
 
-        if(tournament.hasStarted()) return;
+        if(soloTournament.hasStarted()) return;
 
-        tournament.start();
+        soloTournament.start();
     }
 
     public void endTournament(String arenaId){
         if(!exists(arenaId)) return;
 
-        Tournament tournament = getTournament(arenaId);
+        SoloTournament soloTournament = getTournament(arenaId);
 
-        if(!tournament.hasStarted()) return;
+        if(!soloTournament.hasStarted()) return;
 
-        tournament.end();
+        soloTournament.end();
     }
 
 

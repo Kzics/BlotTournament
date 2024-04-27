@@ -1,9 +1,11 @@
 package com.tournament.obj;
 
+import com.tournament.obj.impl.Kit;
 import com.tournament.obj.impl.TournamentPlayer;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface ITournament {
@@ -21,5 +23,7 @@ public interface ITournament {
     boolean hasStarted();
     void start();
     void end();
+    Optional<Kit> getKit();
+    void setKit(Kit kit);
 
 }

@@ -1,30 +1,17 @@
-package com.tournament.obj.impl;
+package com.tournament.obj.impl.tournaments;
+import com.tournament.obj.impl.Kit;
+import com.tournament.obj.impl.TournamentPlayer;
 
-import com.tournament.obj.ITournament;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
-
-public class Tournament implements ITournament {
-
-    private final String arenaId;
-    private int maxRound;
-    private int currentRound;
-    private final HashMap<UUID, TournamentPlayer> activePlayers;
-    private final List<UUID> spectators;
-    private boolean isPlaying;
-
-    public Tournament(String arenaId){
-        this.arenaId = arenaId;
-        this.activePlayers = new HashMap<>();
-        this.spectators = new ArrayList<>();
+public class SoloTournament extends Tournament {
+    public SoloTournament(String arenaId){
+        super(arenaId);
     }
 
     @Override
     public String getArenaId() {
-        return arenaId;
+        return this.arenaId;
     }
 
     @Override
@@ -86,5 +73,15 @@ public class Tournament implements ITournament {
     public void end() {
         this.isPlaying = false;
 
+    }
+
+    @Override
+    public Optional<Kit> getKit() {
+        return Optional.of(kit);
+    }
+
+    @Override
+    public void setKit(Kit kit) {
+        this.kit = kit;
     }
 }
