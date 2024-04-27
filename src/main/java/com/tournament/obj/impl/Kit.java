@@ -4,14 +4,16 @@ import com.tournament.obj.IKit;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class Kit implements IKit {
     private final String id;
-    private HashMap<Integer, SlotItem> slotItems;
-
+    private final HashMap<Integer, ItemStack> slotItems;
+    private final List<ItemStack> armorItems;
     public Kit(String id) {
         this.id = id;
         this.slotItems = new HashMap<>();
+        this.armorItems = new java.util.ArrayList<>();
     }
 
     @Override
@@ -19,30 +21,21 @@ public class Kit implements IKit {
         return id;
     }
 
-    public HashMap<Integer, SlotItem> getSlotItems() {
+    public HashMap<Integer, ItemStack> getSlotItems() {
         return slotItems;
     }
 
-    public void addItem(int slot, ItemStack item, SlotType slotType) {
-        slotItems.put(slot, new SlotItem(item, slotType));
+    public List<ItemStack> getArmorItems() {
+        return armorItems;
+    }
+
+    public void addArmorItem(ItemStack item) {
+        armorItems.add(item);
+    }
+
+    public void addItem(int slot, ItemStack item) {
+        slotItems.put(slot - 18, item);
     }
 }
 
-class SlotItem {
-    private ItemStack item;
-    private SlotType slotType;
-
-    public SlotItem(ItemStack item, SlotType slotType) {
-        this.item = item;
-        this.slotType = slotType;
-    }
-
-    public ItemStack getItem() {
-        return item;
-    }
-
-    public SlotType getSlotType() {
-        return slotType;
-    }
-}
 

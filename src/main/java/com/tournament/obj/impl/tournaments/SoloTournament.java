@@ -5,8 +5,10 @@ import com.tournament.obj.impl.TournamentPlayer;
 import java.util.*;
 
 public class SoloTournament extends Tournament {
-    public SoloTournament(String arenaId){
+    public SoloTournament(String arenaId, int players, int maxRound){
         super(arenaId);
+        this.maxRound = maxRound;
+        this.maxPlayers = players;
     }
 
     @Override

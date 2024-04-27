@@ -27,7 +27,7 @@ public class TournamentsMenu extends GUI {
 
         manager.getActiveTournaments().values().forEach(tournament -> {
             TournamentButton tournamentButton = new TournamentButton(tournament.getArenaId(),
-                    List.of(), manager);
+                    List.of(), tournament);
             ItemStack itemStack = tournamentButton.getButton();
 
             inventory.addItem(itemStack);

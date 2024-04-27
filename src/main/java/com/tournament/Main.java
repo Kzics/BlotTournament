@@ -15,4 +15,11 @@ public class Main extends JavaPlugin {
         tournamentsManager = new TournamentsManager();
     }
 
+    public KitsManager getKitsManager() {
+        return kitsManager;
+    }
+
+    public TournamentsManager getTournamentsManager() {
+        return tournamentsManager;
+    }
 }

@@ -16,6 +16,7 @@ public abstract class Tournament implements ITournament {
     protected final List<UUID> spectators;
     protected boolean isPlaying;
     protected Kit kit;
+    protected int maxPlayers;
 
     protected Tournament(String arenaId) {
         this.arenaId = arenaId;
@@ -41,5 +42,10 @@ public abstract class Tournament implements ITournament {
     @Override
     public void removeSpectator(UUID uuid) {
         spectators.remove(uuid);
+    }
+
+    @Override
+    public void start() {
+        isPlaying = true;
     }
 }

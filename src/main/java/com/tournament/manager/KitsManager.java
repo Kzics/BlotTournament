@@ -20,8 +20,8 @@ public class KitsManager {
         kits.remove(arena);
     }
 
-    public Kit getKit(String arena){
-        return kits.get(arena);
+    public Kit getKit(String name){
+        return kits.get(name);
     }
 
 
