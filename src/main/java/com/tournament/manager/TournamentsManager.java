@@ -3,56 +3,70 @@ package com.tournament.manager;
 import com.tournament.obj.impl.tournaments.SoloTournament;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class TournamentsManager {
-    HashMap<String, SoloTournament> activeTournaments;
+    private final HashMap<String, SoloTournament> tournaments;
+
     public TournamentsManager(){
-        this.activeTournaments = new HashMap<>();
+        this.tournaments = new HashMap<>();
+    }
+
+    public HashMap<String, SoloTournament> getTournaments() {
+        return tournaments;
     }
 
     public HashMap<String, SoloTournament> getActiveTournaments() {
+        HashMap<String, SoloTournament> activeTournaments = new HashMap<>();
+        for (Map.Entry<String, SoloTournament> entry : tournaments.entrySet()) {
+            if (entry.getValue().hasStarted()) {
+                activeTournaments.put(entry.getKey(), entry.getValue());
+            }
+        }
         return activeTournaments;
     }
 
-    public void addTournament(SoloTournament soloTournament){
-        activeTournaments.put(soloTournament.getArenaId(), soloTournament);
+    public HashMap<String, SoloTournament> getPendingTournaments() {
+        HashMap<String, SoloTournament> pendingTournaments = new HashMap<>();
+        for (Map.Entry<String, SoloTournament> entry : tournaments.entrySet()) {
+            if (!entry.getValue().hasStarted()) {
+                pendingTournaments.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return pendingTournaments;
     }
+
+    public void addTournament(SoloTournament soloTournament){
+        tournaments.put(soloTournament.getArenaId(), soloTournament);
+    }
+
     public void removeTournament(String arenaId){
-        activeTournaments.remove(arenaId);
+        tournaments.remove(arenaId);
     }
 
     public SoloTournament getTournament(String arenaId){
-        return activeTournaments.get(arenaId);
+        return tournaments.get(arenaId);
     }
 
     public boolean exists(String arenaId){
-        return activeTournaments.containsKey(arenaId);
+        return tournaments.containsKey(arenaId);
     }
 
     public boolean isPlaying(String arenaId){
-        return activeTournaments.get(arenaId).hasStarted();
+        return tournaments.containsKey(arenaId) && tournaments.get(arenaId).hasStarted();
     }
 
-    public void startTournament(String arenaId){
-        if(!exists(arenaId)) return;
+    public void startTournament(String arenaId, int maxPlayers, int maxRound){
+        if(!tournaments.containsKey(arenaId)) return;
 
-        SoloTournament soloTournament = getTournament(arenaId);
-
-        if(soloTournament.hasStarted()) return;
-
-        soloTournament.start();
+        SoloTournament soloTournament = tournaments.get(arenaId);
+        soloTournament.start(maxPlayers, maxRound);
     }
 
     public void endTournament(String arenaId){
-        if(!exists(arenaId)) return;
+        if(!tournaments.containsKey(arenaId)) return;
 
-        SoloTournament soloTournament = getTournament(arenaId);
-
-        if(!soloTournament.hasStarted()) return;
-
+        SoloTournament soloTournament = tournaments.get(arenaId);
         soloTournament.end();
     }
-
-
-
 }

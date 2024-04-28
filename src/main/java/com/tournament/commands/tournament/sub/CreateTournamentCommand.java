@@ -2,7 +2,6 @@ package com.tournament.commands.tournament.sub;
 
 import com.tournament.Main;
 import com.tournament.commands.ICommand;
-import com.tournament.obj.impl.Kit;
 import com.tournament.obj.impl.tournaments.SoloTournament;
 import com.tournament.obj.impl.tournaments.Tournament;
 import org.bukkit.command.CommandSender;
@@ -13,7 +12,6 @@ public class CreateTournamentCommand implements ICommand {
     public CreateTournamentCommand(final Main main) {
         this.main = main;
     }
-
     @Override
     public String getName() {
         return "create";
@@ -21,7 +19,7 @@ public class CreateTournamentCommand implements ICommand {
 
     @Override
     public String getDescription() {
-        return "Create a new tournament";
+        return "Create a tournament";
     }
 
     @Override
@@ -31,25 +29,13 @@ public class CreateTournamentCommand implements ICommand {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if(args.length != 4){
-            sender.sendMessage("Usage: /tournament create <arena name> <kit name> <# players> <rounds>");
+        if(args.length != 2){
+            sender.sendMessage("Usage: /tournament create <arena name>");
             return;
         }
 
-        String arenaName = args[0];
-        String kitName = args[1];
-        int players = Integer.parseInt(args[2]);
-        int rounds = Integer.parseInt(args[3]);
-
-
-        SoloTournament tournament = new SoloTournament(arenaName, players, rounds);
-        Kit kit = main.getKitsManager().getKit(kitName);
-        if(kit == null){
-            sender.sendMessage("Kit not found");
-            return;
-        }
-        tournament.setKit(kit);
-
+        // Create the tournament
+        SoloTournament tournament = new SoloTournament(args[1]);
         main.getTournamentsManager().addTournament(tournament);
 
         sender.sendMessage("Tournament created");

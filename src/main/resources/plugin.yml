@@ -1,0 +1,7 @@
+main: com.tournament.Main
+version: 1.0.0
+name: BlotTournament
+api-version: 1.13
+commands:
+  tournament:
+    description: Tournaments command

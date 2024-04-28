@@ -12,8 +12,8 @@ public class KitsManager {
     public KitsManager() {
         this.kits = new HashMap<>();
     }
-    public void addKit(Kit kit, String arena){
-        kits.put(arena, kit);
+    public void addKit(Kit kit){
+        kits.put(kit.getId(), kit);
     }
 
     public void removeKit(String arena){
@@ -23,6 +23,5 @@ public class KitsManager {
     public Kit getKit(String name){
         return kits.get(name);
     }
-
 
 }

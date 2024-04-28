@@ -34,7 +34,7 @@ public class Kit implements IKit {
     }
 
     public void addItem(int slot, ItemStack item) {
-        slotItems.put(slot - 18, item);
+        slotItems.put(slot, item);
     }
 }
 

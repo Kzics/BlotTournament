@@ -1,5 +1,6 @@
 package com.tournament.menu.impl.kits;
 
+import com.tournament.Main;
 import com.tournament.enums.WatchType;
 import com.tournament.menu.GUI;
 import com.tournament.obj.impl.Kit;
@@ -29,12 +30,13 @@ public class KitInfoMenu extends GUI {
         super.open(player);
 
         ItemStack glass = new ItemStack(Material.BARRIER);
-        for (int i = 4; i < 17; i++) {
+        for (int i = 4; i < 18; i++) {
             inventory.setItem(i, glass);
         }
 
         if (kit != null) {
             kit.getSlotItems().forEach(inventory::setItem);
+            kit.getArmorItems().forEach(inventory::addItem);
         }
 
         player.openInventory(inventory);
@@ -64,8 +66,11 @@ public class KitInfoMenu extends GUI {
         if (player.hasPermission("tournament.admin")) {
             for (int i = 0; i < 36; i++) {
                 ItemStack itemStack = view.getItem(i);
+
                 if (itemStack != null) {
-                    if (i < 5) {
+                    if(itemStack.getType().equals(Material.BARRIER)) continue;
+
+                    if (i < 4) {
                         kit.addArmorItem(itemStack);
                     } else {
                         kit.addItem(i, itemStack);
@@ -73,6 +78,7 @@ public class KitInfoMenu extends GUI {
                 }
             }
         }
+        player.sendMessage("Kit saved");
     }
 
     @Override

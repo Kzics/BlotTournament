@@ -1,6 +1,5 @@
 package com.tournament.menu.buttons.impl;
 
-import com.tournament.manager.TournamentsManager;
 import com.tournament.menu.buttons.Button;
 import com.tournament.menu.impl.TournamentInfoMenu;
 import com.tournament.obj.impl.tournaments.Tournament;
@@ -19,6 +18,7 @@ public class TournamentButton extends Button {
 
     @Override
     public void handleClick(InventoryClickEvent event) {
+        System.out.println("CLICKED HERE");
         new TournamentInfoMenu(tournament).open((Player) event.getWhoClicked());
     }
 }

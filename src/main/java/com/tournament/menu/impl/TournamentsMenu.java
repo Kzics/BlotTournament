@@ -15,8 +15,8 @@ import java.util.List;
 public class TournamentsMenu extends GUI {
 
     private final TournamentsManager manager;
-    public TournamentsMenu(int size, String title, TournamentsManager manager) {
-        super(size, title);
+    public TournamentsMenu(TournamentsManager manager) {
+        super(54, "Tournaments");
         this.manager = manager;
     }
 
@@ -25,24 +25,34 @@ public class TournamentsMenu extends GUI {
     public void open(Player player) {
         super.open(player);
 
-        manager.getActiveTournaments().values().forEach(tournament -> {
+        manager.getTournaments().values().forEach(tournament -> {
             TournamentButton tournamentButton = new TournamentButton(tournament.getArenaId(),
                     List.of(), tournament);
             ItemStack itemStack = tournamentButton.getButton();
 
             inventory.addItem(itemStack);
-            buttons.put(itemStack, tournamentButton);
+
+            this.buttons.put(itemStack, tournamentButton);
         });
+
+        player.openInventory(inventory);
     }
 
     @Override
     public void handle(InventoryClickEvent event) {
         event.setCancelled(true);
         ItemStack itemStack = event.getCurrentItem();
+        System.out.println("Here");
 
         Button button = buttons.get(itemStack);
+        buttons.values().forEach(b-> System.out.println(b.getButton().getType()));
+        System.out.println(itemStack.getType());
         if (button != null) {
             button.handleClick(event);
+            System.out.println("handling");
+        }else{
+            System.out.println("not handling");
+
         }
     }
 

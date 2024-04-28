@@ -1,5 +1,6 @@
 package com.tournament.obj.impl.tournaments;
 
+import com.tournament.obj.Round;
 import com.tournament.obj.impl.Kit;
 import com.tournament.obj.impl.Team;
 import com.tournament.obj.impl.TournamentPlayer;
@@ -27,13 +28,13 @@ public class TeamTournament extends Tournament{
     }
 
     @Override
-    public int getCurrentRound() {
+    public Round getCurrentRound() {
         return currentRound;
     }
 
     @Override
-    public int nextRound() {
-        return ++currentRound;
+    public void nextRound() {
+        currentRound = new Round(currentRound.getCount() + 1);
     }
 
     @Override
@@ -52,7 +53,7 @@ public class TeamTournament extends Tournament{
     }
 
     @Override
-    public void start() {
+    public void start(int maxPlayers, int maxRound) {
         this.isPlaying = true;
     }
 

@@ -6,44 +6,40 @@ import com.tournament.obj.impl.Kit;
 import com.tournament.obj.impl.tournaments.SoloTournament;
 import org.bukkit.command.CommandSender;
 
-public class SetTournamentKitCommand implements ICommand {
-
+public class StartTournamentCommand implements ICommand {
 
     private final Main main;
-    public SetTournamentKitCommand(final Main main) {
+    public StartTournamentCommand(final Main main) {
         this.main = main;
-
     }
+
     @Override
     public String getName() {
-        return "setkit";
+        return "start";
     }
 
     @Override
     public String getDescription() {
-        return "Set the kit for the tournament";
+        return "Start a new tournament";
     }
 
     @Override
     public String getPermission() {
-        return "tournament.setkit";
+        return "tournament.start";
     }
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if(args.length != 3){
-            sender.sendMessage("Usage: /tournament setkit <arena name> <kit name>");
+        if(args.length != 5){
+            sender.sendMessage("Usage: /tournament start <arena name> <kit name> <# players> <rounds>");
             return;
         }
 
-        String tournamentName = args[1];
+        String arenaName = args[1];
         String kitName = args[2];
+        int players = Integer.parseInt(args[3]);
+        int rounds = Integer.parseInt(args[4]);
 
-        SoloTournament tournament = main.getTournamentsManager().getTournament(tournamentName);
-        if(tournament == null){
-            sender.sendMessage("Tournament not found");
-            return;
-        }
 
         Kit kit = main.getKitsManager().getKit(kitName);
         if(kit == null){
@@ -51,8 +47,6 @@ public class SetTournamentKitCommand implements ICommand {
             return;
         }
 
-        tournament.setKit(kit);
-
-
+        main.getTournamentsManager().startTournament(arenaName, players, rounds);
     }
 }

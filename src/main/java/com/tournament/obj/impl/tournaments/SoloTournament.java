@@ -1,5 +1,8 @@
 package com.tournament.obj.impl.tournaments;
+import com.tournament.SpawnPoint;
+import com.tournament.obj.Round;
 import com.tournament.obj.impl.Kit;
+import com.tournament.obj.impl.TournamentFight;
 import com.tournament.obj.impl.TournamentPlayer;
 
 import java.util.*;
@@ -9,6 +12,11 @@ public class SoloTournament extends Tournament {
         super(arenaId);
         this.maxRound = maxRound;
         this.maxPlayers = players;
+    }
+    public SoloTournament(String arenaId){
+        super(arenaId);
+        this.maxRound = 2;
+        this.maxPlayers = 2;
     }
 
     @Override
@@ -22,13 +30,13 @@ public class SoloTournament extends Tournament {
     }
 
     @Override
-    public int getCurrentRound() {
+    public Round getCurrentRound() {
         return this.currentRound;
     }
 
     @Override
-    public int nextRound() {
-        return ++this.currentRound;
+    public void nextRound() {
+        currentRound = new Round(currentRound.getCount() + 1);
     }
 
     @Override
@@ -41,10 +49,6 @@ public class SoloTournament extends Tournament {
         return spectators;
     }
 
-    @Override
-    public void addSpectator(UUID uuid) {
-        spectators.add(uuid);
-    }
 
     @Override
     public void removeSpectator(UUID uuid) {
@@ -67,15 +71,15 @@ public class SoloTournament extends Tournament {
     }
 
     @Override
-    public void start() {
+    public void start(int maxPlayers, int maxRound) {
         this.isPlaying = true;
     }
 
     @Override
     public void end() {
         this.isPlaying = false;
-
     }
+
 
     @Override
     public Optional<Kit> getKit() {
@@ -86,4 +90,5 @@ public class SoloTournament extends Tournament {
     public void setKit(Kit kit) {
         this.kit = kit;
     }
+
 }

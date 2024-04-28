@@ -1,5 +1,6 @@
 package com.tournament.commands.tournament.sub;
 
+import com.tournament.Main;
 import com.tournament.commands.ICommand;
 import com.tournament.enums.WatchType;
 import com.tournament.menu.impl.kits.KitInfoMenu;
@@ -8,6 +9,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class CreateKitTournamentCommand implements ICommand {
+
+
+    private final Main main;
+    public CreateKitTournamentCommand(final Main main) {
+        this.main = main;
+    }
     @Override
     public String getName() {
         return "createkit";
@@ -30,9 +37,11 @@ public class CreateKitTournamentCommand implements ICommand {
             return;
         }
 
-        String kitName = args[0];
+        String kitName = args[1];
         Kit kit = new Kit(kitName);
 
         new KitInfoMenu(kit, WatchType.EDITOR).open((Player) sender);
+
+        main.getKitsManager().addKit(kit);
     }
 }
