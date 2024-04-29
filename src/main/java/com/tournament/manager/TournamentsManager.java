@@ -1,6 +1,8 @@
 package com.tournament.manager;
 
+import com.tournament.obj.impl.Kit;
 import com.tournament.obj.impl.tournaments.SoloTournament;
+import org.bukkit.Bukkit;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -56,11 +58,20 @@ public class TournamentsManager {
         return tournaments.containsKey(arenaId) && tournaments.get(arenaId).hasStarted();
     }
 
-    public void startTournament(String arenaId, int maxPlayers, int maxRound){
-        if(!tournaments.containsKey(arenaId)) return;
+    public boolean startTournament(String arenaId, int maxPlayers, int maxRound, Kit kit){
+        if(!tournaments.containsKey(arenaId)) return false;
 
         SoloTournament soloTournament = tournaments.get(arenaId);
+        if(soloTournament.hasStarted()) return false;
+        if(!soloTournament.hasPointSet()) return false;
+
+        soloTournament.setKit(kit);
+
         soloTournament.start(maxPlayers, maxRound);
+
+        Bukkit.broadcastMessage("Tournament started");
+
+        return true;
     }
 
     public void endTournament(String arenaId){

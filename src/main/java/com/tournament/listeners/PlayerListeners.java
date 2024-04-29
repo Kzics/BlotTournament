@@ -29,15 +29,16 @@ public class PlayerListeners implements Listener {
 
             if(player.getHealth() - event.getFinalDamage() <= 0){
                 event.setCancelled(true);
-                for (SoloTournament tournament : tournamentsManager.getActiveTournaments().values()){
+                for (SoloTournament tournament : tournamentsManager.getTournaments().values()){
                     if(tournament.getCurrentRound().getCurrentFight().getFighters().contains(player.getUniqueId())
                             && tournament.getCurrentRound().getCurrentFight().getFighters().contains(damager.getUniqueId())){
-                        TournamentFightEndEvent endEvent = new TournamentFightEndEvent(tournament, tournament.getCurrentRound().getCurrentFight(), damager.getUniqueId());
+                        TournamentFightEndEvent endEvent = new TournamentFightEndEvent(tournament, tournament.getCurrentRound().getCurrentFight()
+                                , damager.getUniqueId(), player.getUniqueId());
                         main.getServer().getPluginManager().callEvent(endEvent);
                         return;
                     }
                 }
-                //amager.sendMessage("You killed " + player.getName());
+                damager.sendMessage("You killed " + player.getName());
             }
         }
     }

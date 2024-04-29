@@ -1,8 +1,6 @@
 package com.tournament.obj.impl.tournaments;
-import com.tournament.SpawnPoint;
 import com.tournament.obj.Round;
 import com.tournament.obj.impl.Kit;
-import com.tournament.obj.impl.TournamentFight;
 import com.tournament.obj.impl.TournamentPlayer;
 
 import java.util.*;
@@ -34,10 +32,6 @@ public class SoloTournament extends Tournament {
         return this.currentRound;
     }
 
-    @Override
-    public void nextRound() {
-        currentRound = new Round(currentRound.getCount() + 1);
-    }
 
     @Override
     public HashMap<UUID,TournamentPlayer> getActivePlayers() {
@@ -68,16 +62,6 @@ public class SoloTournament extends Tournament {
     @Override
     public boolean hasStarted() {
         return this.isPlaying;
-    }
-
-    @Override
-    public void start(int maxPlayers, int maxRound) {
-        this.isPlaying = true;
-    }
-
-    @Override
-    public void end() {
-        this.isPlaying = false;
     }
 
 

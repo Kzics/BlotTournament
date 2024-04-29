@@ -1,6 +1,7 @@
 package com.tournament.obj.impl;
 
 import com.tournament.obj.IKit;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
@@ -35,6 +36,13 @@ public class Kit implements IKit {
 
     public void addItem(int slot, ItemStack item) {
         slotItems.put(slot, item);
+    }
+
+    @Override
+    public void apply(Player player) {
+        player.getInventory().clear();
+        slotItems.forEach(player.getInventory()::setItem);
+        player.getInventory().setArmorContents(armorItems.toArray(new ItemStack[0]));
     }
 }
 

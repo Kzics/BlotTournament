@@ -25,6 +25,8 @@ public interface ITournament {
     void removeActivePlayer(UUID uuid);
     boolean hasStarted();
     void start(int maxPlayers, int maxRound);
+    boolean hasPointSet();
+    void eliminate(TournamentPlayer player);
     void end();
     Optional<Kit> getKit();
     void setKit(Kit kit);

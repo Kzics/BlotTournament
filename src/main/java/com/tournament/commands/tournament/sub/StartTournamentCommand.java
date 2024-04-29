@@ -31,7 +31,7 @@ public class StartTournamentCommand implements ICommand {
     @Override
     public void execute(CommandSender sender, String[] args) {
         if(args.length != 5){
-            sender.sendMessage("Usage: /tournament start <arena name> <kit name> <# players> <rounds>");
+            sender.sendMessage("Usage: /tournament start <arena name> <# players> <rounds>");
             return;
         }
 
@@ -47,6 +47,10 @@ public class StartTournamentCommand implements ICommand {
             return;
         }
 
-        main.getTournamentsManager().startTournament(arenaName, players, rounds);
+        if(main.getTournamentsManager().startTournament(arenaName,players, rounds,kit)){
+            sender.sendMessage("Tournament started");
+        } else {
+            sender.sendMessage("Can't start tournament");
+        }
     }
 }

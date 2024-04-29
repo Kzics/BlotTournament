@@ -33,11 +33,6 @@ public class TeamTournament extends Tournament{
     }
 
     @Override
-    public void nextRound() {
-        currentRound = new Round(currentRound.getCount() + 1);
-    }
-
-    @Override
     public HashMap<UUID, TournamentPlayer> getActivePlayers() {
         return activePlayers;
     }

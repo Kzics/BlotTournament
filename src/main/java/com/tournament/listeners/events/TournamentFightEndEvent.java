@@ -16,11 +16,18 @@ public class TournamentFightEndEvent extends Event implements Cancellable {
     private final SoloTournament tournament;
     private final TournamentFight fight;
     private final UUID winner;
+    private final UUID loser;
 
-    public TournamentFightEndEvent(SoloTournament tournament, TournamentFight fight, UUID winner) {
+    public TournamentFightEndEvent(SoloTournament tournament, TournamentFight fight, UUID winner, UUID loser) {
         this.tournament = tournament;
         this.fight = fight;
         this.winner = winner;
+        this.loser = loser;
+    }
+
+
+    public UUID getLoser() {
+        return loser;
     }
 
     public UUID getWinner() {

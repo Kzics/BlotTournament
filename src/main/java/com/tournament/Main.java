@@ -13,8 +13,10 @@ public class Main extends JavaPlugin {
 
     private KitsManager kitsManager;
     private TournamentsManager tournamentsManager;
+    private static Main instance;
     @Override
     public void onEnable() {
+        instance = this;
         kitsManager = new KitsManager();
         tournamentsManager = new TournamentsManager();
 
@@ -27,6 +29,10 @@ public class Main extends JavaPlugin {
 
     public KitsManager getKitsManager() {
         return kitsManager;
+    }
+
+    public static Main getInstance() {
+        return instance;
     }
 
     public TournamentsManager getTournamentsManager() {

@@ -41,7 +41,7 @@ public class SetTournamentPositionCommand implements ICommand {
         Location playerLocation = ((Player) sender).getLocation();
 
         String tournamentName = args[1];
-        int position = Integer.parseInt(args[2]);
+        int position = Integer.parseInt(args[2]) - 1;
 
         SpawnPoint spawnPoint = new SpawnPoint(playerLocation);
 

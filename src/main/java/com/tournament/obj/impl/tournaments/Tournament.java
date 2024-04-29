@@ -1,13 +1,13 @@
 package com.tournament.obj.impl.tournaments;
 
 import com.tournament.SpawnPoint;
+import com.tournament.enums.MessageType;
 import com.tournament.obj.ITournament;
 import com.tournament.obj.Round;
 import com.tournament.obj.impl.Kit;
 import com.tournament.obj.impl.TournamentFight;
 import com.tournament.obj.impl.TournamentPlayer;
 import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -43,6 +43,14 @@ public abstract class Tournament implements ITournament {
     }
 
     @Override
+    public void eliminate(TournamentPlayer player) {
+        activePlayers.remove(player.getPlayer().getUniqueId());
+        player.getPlayer().setGameMode(GameMode.SPECTATOR);
+
+        player.getPlayer().teleport(getSpawnPoint(1).getLocation());
+    }
+
+    @Override
     public void addActivePlayer(TournamentPlayer player) {
         activePlayers.put(player.getPlayer().getUniqueId(), player);
     }
@@ -62,6 +70,48 @@ public abstract class Tournament implements ITournament {
         isPlaying = true;
         this.maxPlayers = maxPlayers;
         this.maxRound = maxRound;
+
+        System.out.println("wsh");
+        nextRound();
+    }
+
+    @Override
+    public void end() {
+        isPlaying = false;
+        TournamentPlayer winner = activePlayers.values().stream().findFirst().orElse(null);
+        if(winner != null){
+            winner.sendMessage(MessageType.WINNER, false);
+        }
+
+        activePlayers.clear();
+        spectators.clear();
+        fights.clear();
+        currentRound = null;
+    }
+
+    @Override
+    public boolean hasPointSet() {
+        return spawnLocations[0] != null && spawnLocations[1] != null;
+    }
+
+    @Override
+    public void nextRound() {
+        if(getActivePlayers().values().size() <= 1){
+            end();
+            return;
+        }
+
+        currentRound = new Round(currentRound == null ? 1 :currentRound.getCount() + 1, activePlayers, this);
+
+
+        //fight.getParticipant1().sendMessage(MessageType.PREROUND, fight.getParticipant2());
+        //fight.getParticipant2().sendMessage(MessageType.PREROUND, fight.getParticipant1());
+    }
+
+    public void broadcastMessage(MessageType type){
+        for (TournamentPlayer player : activePlayers.values()) {
+            player.sendMessage(type, false);
+        }
     }
 
     @Override
@@ -72,4 +122,5 @@ public abstract class Tournament implements ITournament {
     public void setSpawnPoint(int position, SpawnPoint spawnPoint) {
         spawnLocations[position] = spawnPoint;
     }
+
 }

@@ -50,5 +50,7 @@ public class JoinTournamentCommand implements ICommand {
         }
 
         tournament.addActivePlayer(new TournamentPlayer(player));
+
+        player.sendMessage("You have joined the tournament.");
     }
 }
